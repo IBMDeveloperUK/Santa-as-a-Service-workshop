@@ -1,6 +1,7 @@
-# Santa-as-a-Service-workshop# Workshop - Santa as a Service
+# Workshop - Santa as a Service
 
 At the end of this lab, you should have an app that looks like this: 
+
 // insert screenshot
 
 This workshop is made using IBM Cloud for simplicity, though if you feel more comfortable with an other platform, an other Image Recognition service or if you want to run Node-RED on your machine, please do so! 
