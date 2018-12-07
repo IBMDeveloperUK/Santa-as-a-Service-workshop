@@ -1,6 +1,6 @@
 # Workshop - Santa as a Service
 
-At the end of this lab, you should have an app that looks like this: 
+At the end of this lab... you'll have a beard, just like Santa! And hopefully you'll have created the app to do so! 
 
 // insert screenshot
 
@@ -41,5 +41,8 @@ To complete this workshop you will need:
 4. Click on "Create Connection"
 5. Click "Connect" next to your VR service and then "Restage"
 
-### Building the flow
-// todo
+## On to the workshops! 
+
+### Workshop 1 - Node-Red & Watson Visual Recognition
+
+### Workshop 2 - Serverless, Node-Red & Watson Visual Recognition
