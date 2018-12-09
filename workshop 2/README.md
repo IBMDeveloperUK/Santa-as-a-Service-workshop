@@ -66,3 +66,42 @@ Once on the Endpoints page, you'll be presented with a series of check boxes.
 ![The endpoints tab](images/hello_world_function.png)
 
 What you're seeing is the result of our serverless function being executed after having been triggered by the HTTP endpoint! Isn't that neat? So far, we're getting the _Hello, World_ code that our function was created with by Openwhisk. Before we work to replace that code with something a little more useful, we're first going to configure some query parameters to enable our action to talk to Watson Visual Recognition.
+
+### Obtaining Visual Recognition Credentials
+
+First things first, before we can assign some Visual Recognition credentials to our serverless function, we need to generate them!
+
+If you don't have a Watson Visual Recognition service already provisioned in your IBM Cloud account, you can find the instructions on the [main README](../README.md) of this repository. Go there, provision your Watson Visual Recognition instance, then come back here.
+
+1. In another tab, Head to your [IBM Cloud Dashboard](https://cloud.ibm.com).
+2. Click on the "view all" button in the resource summary section of your dashboard (highlighted in green).
+
+![An image of the resource selection dialog](images/resource-selection.png)
+
+3. This will take you to your resources list for your IBM Cloud account. Expand the "Services" section and select the Watson Visual Recogntion instance you have already created. This will take you through to the dashboard for your Visual Recognition instance.
+
+![The Visual Recognition instance management screen](images/visual-recognition-dashboard.png)
+
+4. On this page there is an "API Key" field. Click the copy icon next to the field (highlighted in green) to copy your Visual Recognition API key to your clipboard.
+
+![An image highlighting the copy icon for the API key on the Visual Recognition management screen](images/clipboard-copy-button.png).
+
+### Creating a parameter for your serverless function
+
+If we want our serverless function to have access to private, pre-defined values we can create "Parameters". These behave much in the same way that environment variables do in a normal server application, but instead of persisting in the environment of the application, they are instead passed to the serverless function as a parameter when it's executed.
+
+1. Head back to your serverless function page. On the left hand of the display, click the "Parameters" link in the menu.
+
+![The Visual Recognition instance management screen](images/parameters.png)
+
+2. Once the view has loaded, you'll see a button to "Add Parameter" (highlighted in green). Click the button.
+
+![The Visual Recognition instance management screen](images/add-parameter.png)
+
+3. You'll now be presented with an input form to add parameters to your function. In the field for "Parameter name" add **WATSON_VISUAL_RECOGNITION_KEY** and in the input field for "Parameter value" paste the API key for your Watson Visual Recognition instance.
+
+![The Visual Recognition instance management screen](images/parameter-form.png)
+
+4. Click the "Save" button at the top right of the dialog to save your paramters.
+
+Now, whenever we activate our function, we have access to an API key that we can use to make a request to our Visual Recognition instance. 
