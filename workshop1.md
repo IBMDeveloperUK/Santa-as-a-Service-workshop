@@ -26,6 +26,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 6. Open the `Javascript` node and paste the following code. Make sure that you read through the code to make sure you understand what's happening! If you're not sure feel free to ask one of the mentors that can help you.
 <details>
 <summary>Click to see the Javascript</summary>
+    
 <p>
 
 ```javascript
@@ -84,6 +85,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 7. Now, we'll do the same with a bit of CSS, open the `Stylesheet` node and paste the following code
 <details>
 <summary>Click to see the CSS</summary>
+    
 <p>
 
 ```css
@@ -122,6 +124,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 8. Almost there! Now we need to import both the Javascript and the CSS on our HTML page, to do so, open the HTML node and paste in the following code
 <details>
 <summary>Click to see the HTML</summary>
+    
 <p>
 
 ```html
