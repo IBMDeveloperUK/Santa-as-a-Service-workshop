@@ -250,4 +250,20 @@ resolve( {
 
 ### Packaging and deploying our function as a .zip file
 
-Because our serverless function has dependencies (the Watson SDKs) we need to package them up with our JavaScript and upload them to IBM Cloud.
+Because our serverless function has dependencies (the Watson SDKs) we need to package them up with our JavaScript and upload them to IBM Cloud. Because we're using Node.js, this is super-easy to do with npm scripts.
+
+1. Still in the `/code` directory of the workshop 2 folder, run `npm run package`. This will unzip the `dependencies.zip` file into `/node_modules` and package it up along with `index.js` and `package.json` into a new file `action.zip`.
+
+`action.zip` is what we'll be uploading to our serverless function with the IBM Cloud CLI tools.
+
+Assmuming you've already followed [these instructions](https://console.bluemix.net/openwhisk/learn/cli) to install the IBM Cloud CLI tools on your system, we're ready to put this thing in the cloud!
+
+2. First, you'll need to login to the IBM Cloud with the CLI tools. Run `ibmcloud` and follow the onscreen command prompts. Make sure that the API endpoint matches the region you created your serverless function in.
+
+3. Next run `ibmcloud target --cf` to target the Cloud Foundry org/space that you created your serverless function in. If you're not sure what these are, you can see them listed at the top of the page where you created your HTTP endpoint / assigned parameters.
+
+3. And you're in! It's time to upload your `action.zip` package to IBM Cloud functions, run the following command from your terminal inside the same folder that `action.zip` is in. Replace `<YOUR_SERVERLESS_ACTION_NAME>` with the name of your action name.
+
+```ibmcloud fn action update "<YOUR_SERVERLESS_ACTION_NAME>" action.zip --kind nodejs:8 --verbose```
+
+Notice how we're defining the type of environment we want our function to execute in with the `--kind` flags. Here, we're telling openwhis that we want our function to be executed with Node.js.
