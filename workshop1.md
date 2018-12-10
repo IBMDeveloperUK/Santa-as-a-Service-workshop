@@ -158,6 +158,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
   <section class="section">
     <div class="columns">
       <div class="column" id="upload">
+       <!-- Our camera web component --> 
         <node-red-camera data-nr-name="beard-picture" data-nr-type="still"></node-red-camera>
       </div>
       <div id="pic-before" style="height:480px; width:640px;">
@@ -182,3 +183,23 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 Nicely done! This is it for the frontend... But what is our app without something happening in the backend? It must feel lonely. Let's fix that.
 
 ### Backend flow
+
+On the backend side, there's only a few things we need to do:
+* Get the picture that's taken
+* Send it to Watson Visual Recognition to get the face position
+* Send the position back to the frontend so it can put the beard on the face using WebSockets
+
+Before we start, you'll need to add the camera node to your Node-RED instance as it's not installed by default. To do so, click on the Hamburger menu at the top right, select `Manage palette`, go to the `Install` tab and look for `node-red-contrib-web-components`. Click install and give it a few moments. All set! 
+
+1. In the nodes panel on the left-hand side of the Node-RED UI, search for the `Component Camera` node with one output and drag it onto the canvas. Double click on it and set the `Connection ID` to `beard-picture`. This is the same ID we've set in the HTML, that's how we're going to get the picture data.
+2. Back in the node panel, search for the `visual recognition` node and drag it onto the canvas, it should automatically pick up your Watson credentials so no configuration is needed.
+3. Now, drag and drop the `change` node to the palette, open it and configure it to set the `msg.payload` to `msg.result`. This will set the results from the Visual Recognition node to the payload property.
+4. Last, look for the websocket **output** node and drag it to the canvas. This one requires a bit of configuration:
+* Click on it and set `Type` to `Listen on`
+* Under `Path` select `Add new websocket-listener` and click on the pen to edit it
+* Set `Path` to `/beard-me`, which is the endpoint of our app, leave the other property to `payload` (this is what will send as a message)
+* Click `Add` at the top right and then `Done`.
+5. You should now have a flow that looks like this:
+// insert screenshot
+
+Nice! Your app should now be ready to *put a beard on it*! Hit the big Deploy button at the top right and access your app at `your-node-red-url/beard-me`, show us your best faces. ;)  
