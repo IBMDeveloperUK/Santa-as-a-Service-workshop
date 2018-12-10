@@ -80,7 +80,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 </p>
 </details>  
 
-<br/><br/>
+<br/>
 7. Now, we'll do the same with a bit of CSS, open the `Stylesheet` node and paste the following code
 <details>
 <summary>Click to see the CSS</summary>
@@ -118,7 +118,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 </p>
 </details>  
 
-<br/><br/>
+<br/>
 8. Almost there! Now we need to import both the Javascript and the CSS on our HTML page, to do so, open the HTML node and paste in the following code
 <details>
 <summary>Click to see the HTML</summary>
@@ -178,6 +178,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 </p>
 </details>  
 
+<br/>
 Nicely done! This is it for the frontend... But what is our app without something happening in the backend? It must feel lonely. Let's fix that.
 
 ### Backend flow
