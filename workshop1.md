@@ -159,7 +159,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
   </section>
   <section class="section">
     <div class="columns">
-      <div class="column" id="upload">
+      <div id="upload" style="width:50%">
        <!-- Our camera web component --> 
         <node-red-camera data-nr-name="beard-picture" data-nr-type="still"></node-red-camera>
       </div>
