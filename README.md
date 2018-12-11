@@ -45,4 +45,8 @@ To complete this workshop you will need:
 
 ### Workshop 1 - Node-Red & Watson Visual Recognition
 
+[This way!](workshop1.md)
+
 ### Workshop 2 - Serverless, Node-Red & Watson Visual Recognition
+
+[This other way!](workshop%202/README.md)
