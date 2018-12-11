@@ -239,7 +239,8 @@ const faces = result.images[0].faces.map( face => {
 
 resolve( {
     headers : {
-        "Content-Type" : "application/json"
+        "Content-Type" : "application/json",
+        'Access-Control-Allow-Origin' : '*'
     },
     body : JSON.stringify( { faces } )
 } );
@@ -267,3 +268,92 @@ Assmuming you've already followed [these instructions](https://console.bluemix.n
 ```ibmcloud fn action update "<YOUR_SERVERLESS_ACTION_NAME>" action.zip --kind nodejs:8 --verbose```
 
 Notice how we're defining the type of environment we want our function to execute in with the `--kind` flags. Here, we're telling openwhis that we want our function to be executed with Node.js.
+
+4. And that's it! Our serverless function is now up in the cloud and ready to start processing images. Let's integrate something with it!.
+
+### Calling our serverless function
+
+Now we have a serverless function to call, we're going to call it. To avoid having a discussion about CORs, we're still going to use Node-RED as a proxy to take the request from our web page, pass it on to our serverless function, and then pass the result(s) back to our web page.
+
+If you've not followed Workshop 1 and jumped straight into this one, no worries, we can set up the template we need very quickly.
+
+If you have followed workshop 1, it's best to still follow these instructions to avoid unnecessary complexity. Just create a new Node-RED flow by hitting the "+" at the top right of your screen next to your existing flow tabs.
+
+1. Expand the dropdown below and copy all of the JSON inside to your clipboard.
+
+<details>
+<summary>Click to see the flow JSON file</summary>
+<br>
+   
+```json
+[{"id":"dca025fb.88b7a8","type":"http in","z":"36227125.9967de","name":"Give me a beard! ","url":"/beard-me-serverless","method":"get","upload":false,"swaggerDoc":"","x":180,"y":160,"wires":[["5ded4c85.2ef034"]]},{"id":"1e9bdb91.fe7c04","type":"template","z":"36227125.9967de","name":"","field":"payload","fieldType":"msg","format":"handlebars","syntax":"mustache","template":"<!DOCTYPE html>\n<html>\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Santa-as-a-Service</title>\n  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css\">\n  <style type=\"text/css\">{{{payload.style}}}</style>\n  \n  <script defer src=\"https://use.fontawesome.com/releases/v5.3.1/js/all.js\"></script>\n    <script src=\"https://unpkg.com/@webcomponents/custom-elements\"></script>\n    <script src=\"https://unpkg.com/@webcomponents/shadydom\"></script>\n  <script src=\"/web-components/camera\"></script>\n</head>\n\n<body>\n  <section class=\"section\">\n    <div class=\"container\">\n      <h1 class=\"title\">\n        Santa-as-a-Service\n      </h1>\n      <p class=\"subtitle\">\n        Take a picture of yourself and wait for the magic to happen!\n      </p>\n    </div>\n  </section>\n  <section class=\"section\">\n    <div class=\"columns\">\n      <div class=\"column\" id=\"upload\">\n        <node-red-camera data-nr-name=\"beard-picture\" data-nr-type=\"still\"></node-red-camera>\n      </div>\n      <div id=\"pic-before\" style=\"height:480px; width:640px;\">\n        Result\n      </div>\n    </div>\n  </section>\n\n\n  <script>\n    {{{payload.script}}}\n  </script>\n</body>\n\n</html>","output":"str","x":660,"y":160,"wires":[["41ceac08.cd2974"]]},{"id":"41ceac08.cd2974","type":"http response","z":"36227125.9967de","name":"","statusCode":"","headers":{},"x":790,"y":160,"wires":[]},{"id":"5ded4c85.2ef034","type":"template","z":"36227125.9967de","name":"JavaScript","field":"payload.script","fieldType":"msg","format":"javascript","syntax":"mustache","template":"(function () {\n\n    'use strict';\n    // select the camera element in the DOM\n    const camera = document.querySelector('node-red-camera');\n\n    // listen to an event when a picture is taken\n    camera.addEventListener('imageavailable', function (data) {\n        let img = '<img src=\"' + data.detail + '\" alt=\"Image before the beard\"/>'\n        document.body.querySelector('#pic-before').innerHTML = img;\n        \n        console.log(data.detail);\n        const imageData = data.detail.replace('data:image/png;base64,', '');\n        \n        // Snippet 1\n        \n    });\n\n}());","output":"str","x":350,"y":160,"wires":[["ac2034e1.072998"]]},{"id":"ac2034e1.072998","type":"template","z":"36227125.9967de","name":"Stylesheet","field":"payload.style","fieldType":"msg","format":"css","syntax":"mustache","template":"#pic-before {\n    width: 640px !important;\n    height: 480px !important;\n    position: relative;\n    overflow: hidden;\n    flex: 0 0 640px;\n}\n.beard {\n  position: absolute;\n  display: block;\n  /*background-image: url(https://svgshare.com/i/9j4.svg);*/\n  background-image: url(https://vignette.wikia.nocookie.net/clubpenguin/images/3/34/FuzzyWhiteBeard.png);\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n.beard img {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}","output":"str","x":510,"y":160,"wires":[["1e9bdb91.fe7c04"]]},{"id":"ac8609c1.17f4e8","type":"http in","z":"36227125.9967de","name":"","url":"/get-coords","method":"post","upload":false,"swaggerDoc":"","x":190,"y":220,"wires":[["afce6966.fbd788"]]},{"id":"afce6966.fbd788","type":"http request","z":"36227125.9967de","name":"Call Serverless","method":"POST","ret":"txt","url":"","tls":"","x":450,"y":220,"wires":[["771a21ed.a8fec"]]},{"id":"771a21ed.a8fec","type":"http response","z":"36227125.9967de","name":"","statusCode":"","headers":{},"x":680,"y":220,"wires":[]}]
+```
+</details>
+
+2. Head back to your Node-RED instance. At the top right of the display click the hambuger icon (highlighted in green) and then go down to "import" (highlighted in blue) and then click "Clipboard" (highlighted in red)
+
+![An image showing how to import a flow to a Node-RED instance](images/importing-flows.png)
+
+3. Paste the contents of your clipboard into the dialog window that opens up (pictured below) and click "import". A series of nodes will appear on your content. Click to place them somewhere.
+
+![An image showing how to import a flow to a Node-RED instance](images/import-dialog.png)
+
+4. Now, if you head to the page `/beard-me-serverless`. This path is relative to your Node-RED instance, so if your Node-RED URL is `https://awesome-node-red-project.eu-gb.mybluemix.net/`, then you'll want to head to `https://awesome-node-red-project.eu-gb.mybluemix.net/beard-me-serverless`.
+
+5. Once the page loads, you should see something like the following. Other than activating the camera, it won't do much right now, so we'll have to tweak some things first.
+
+![An image showing the initial state of the serverless "beard me" page](images/santa-serverless-initial.png)
+
+6. Go back to your Node-RED flow and double click on the node called "Call Serverless". This open up a dialog enabling you to configure an endpoint that this node can call when triggered. Paste in the URL for your serverless function (which you can retrieve from the page that we assigned our HTTP endpoint with) making certain to remove the `.json` from the end of the URL, and the select the "POST" method. Click done to save these setting.
+
+![An image showing the configuration of the "Call Serverless" node](images/call-serverless-config.png)
+
+7. Next, it's time to update the JavaScript for our flow. Double-click the `JavaScript` node in your flow to configure it. Copy and paste the following code just beneath the line `// Snippet 1`.
+
+```javascript
+const serverlessURL = `${window.location.origin}/get-coords`;
+const parameters = {
+    body : JSON.stringify({ image : imageData }),
+    headers : {
+        "Content-Type" : "application/json"
+    },
+    method : "POST"
+};
+
+fetch(serverlessURL, parameters)
+    .then(function(res){
+        if(res.ok){
+            return res.json();
+        } else {
+            throw res;
+        }
+    })
+    .then(function(response){
+        
+        console.log(response);
+        
+        // Snippet 2
+
+    })
+    .catch(function(err){
+        console.log(err);       
+    })
+;
+```
+
+Now we have code that capture an image, send it to our serverless function (via Node-RED) and then read the results from the execution of our serverless function. But is this good enough? **NO!** We came here to be bearded, and that's what we're gonna do.
+
+8. Copy and paste the following code just beneath `// Snippet 2` in our "JavaScript" node. This code will take the response from our serverless function and map beards to the identified faces! ✨🎅✨
+
+```javascript
+response.faces.forEach(function (element) {
+    var top = element.top;
+    var left = element.left;
+    var width = element.width;
+    var height = element.height;
+    var beard_elem = '<div class="beard" style="top: '+ (0.50 * height + (top+10)) +'px; left: '+ (left+10) +'px; width: '+ (width - 20) +'px; height: '+ height +'px;"></div>';
+    document.body.querySelector('#pic-before').innerHTML += beard_elem;
+});
+```
+
+9. Once you've copied and pasted the code click "Done" in the config dialog, and then click deploy. Head back to your `/beard-me-serverless` endpoint, reload the page, and you're ready to be Santa-d 🎉
