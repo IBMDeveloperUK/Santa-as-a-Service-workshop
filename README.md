@@ -2,7 +2,7 @@
 
 At the end of this lab... you'll have a beard, just like Santa! And hopefully you'll have created the app to do so! 
 
-// insert screenshot
+![App Preview](santa.gif "App Preview")
 
 This workshop is made using IBM Cloud for simplicity, though if you feel more comfortable with an other platform, an other Image Recognition service or if you want to run Node-RED on your machine, please do so! 
 
