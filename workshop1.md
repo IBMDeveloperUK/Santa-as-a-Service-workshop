@@ -11,10 +11,10 @@ In this version of the workshop you will create an app using exclusiverly Node-R
 At it's core, Node-RED is an interface that's running on an HTTP enabled server, this means we can create HTTP endpoints - and Web applications with very little effort 🎉
 
 1. In the nodes panel on the left-hand side of the Node-RED UI, search for the `template` node with one output and drag it onto the canvas three times.
-  * Double click on the first one, name it `JavaScript` and set `Set property` to `msg.payload.script`
-  * Double click on the second one, name it `Sylesheet` and set `Set property` to `msg.payload.style`
-  * Double click on the third one and name it `HTML`
-  * Link them in the following order: Javascript -> Stylesheet -> HTML
+    * Double click on the first one, name it `JavaScript` and set `Set property` to `msg.payload.script`
+    * Double click on the second one, name it `Sylesheet` and set `Set property` to `msg.payload.style`
+    * Double click on the third one and name it `HTML`
+    * Link them in the following order: Javascript -> Stylesheet -> HTML
 2. Back in the node panel, search for the `http` node and drag it onto the canvas - then connect the http node's output to the `Javascript` nodes input. Double-click on the node, give it the name of your choice and set the `URL` to /beard-me, this will be the endpoint used to access your application.
 3. Search for one final node, the `http response` node, which is similar to _ but distinct from_ the http node we created in step 2. This node will only have one input. Drag it onto the canvas and then connect the `HTML` output node to the `http response`'s input node. This node's settings don't need to be changed as it's only here to send the response back to the requests the HTTP Input node received.
 4. You should now have a flow that looks like the following:
@@ -195,10 +195,10 @@ Before we start, you'll need to add the camera node to your Node-RED instance as
 2. Back in the node panel, search for the `visual recognition` node and drag it onto the canvas, it should automatically pick up your Watson credentials so no configuration is needed.
 3. Now, drag and drop the `change` node to the palette, open it and configure it to set the `msg.payload` to `msg.result`. This will set the results from the Visual Recognition node to the payload property.
 4. Last, look for the websocket **output** node and drag it to the canvas. This one requires a bit of configuration:
-* Click on it and set `Type` to `Listen on`
-* Under `Path` select `Add new websocket-listener` and click on the pen to edit it
-* Set `Path` to `/beard-me`, which is the endpoint of our app, leave the other property to `payload` (this is what will send as a message)
-* Click `Add` at the top right and then `Done`.
+    * Click on it and set `Type` to `Listen on`
+    * Under `Path` select `Add new websocket-listener` and click on the pen to edit it
+    * Set `Path` to `/beard-me`, which is the endpoint of our app, leave the other property to `payload` (this is what will send as a message)
+    * Click `Add` at the top right and then `Done`.
 5. You should now have a flow that looks like this:
 
 ![Backend FLow](workshop1-flow_backend.png.png "Backend Flow")
