@@ -1,0 +1,23 @@
+{
+  "name": "santa-as-a-service",
+  "version": "1.0.0",
+  "description": "Santa on demand - just what you've always wanted for christmas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "unzip dependencies.zip && zip -r action.zip * -x \".env\" -x \"dependencies.zip\" -x \".git\" -x \"test/*\" -x \"invoke.js\" -x \"-x \"params.json\"\" && rm -rf node_modules/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanmtracey/Santa-as-a-Service.git"
+  },
+  "author": "Sean M. Tracey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seanmtracey/Santa-as-a-Service/issues"
+  },
+  "homepage": "https://github.com/seanmtracey/Santa-as-a-Service#readme",
+  "dependencies": {
+    "watson-developer-cloud": "^3.13.1"
+  }
+}
