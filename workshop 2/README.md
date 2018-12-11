@@ -129,6 +129,8 @@ function main(params) {
     // Snippet 1
 
 }
+
+exports.main = main;
 ```
 
 5. The first bit of code we're going to add to our serverless function is some conditional expressions to check that we have everything we need to run. Copy and paste the following just after `// Snippet 1`:
