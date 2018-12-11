@@ -19,7 +19,7 @@ At it's core, Node-RED is an interface that's running on an HTTP enabled server,
 3. Search for one final node, the `http response` node, which is similar to _ but distinct from_ the http node we created in step 2. This node will only have one input. Drag it onto the canvas and then connect the `HTML` output node to the `http response`'s input node. This node's settings don't need to be changed as it's only here to send the response back to the requests the HTTP Input node received.
 4. You should now have a flow that looks like the following:
 
-// insert screenshot
+![Frontend FLow](workshop1-flow_frontend.png "Frontend Flow")
 
 Good start! If you access your Node-Red URL followed by `/beard-me` you'll now see a blank page, not very jolly! Let's add some code to that. 
 
@@ -200,6 +200,7 @@ Before we start, you'll need to add the camera node to your Node-RED instance as
 * Set `Path` to `/beard-me`, which is the endpoint of our app, leave the other property to `payload` (this is what will send as a message)
 * Click `Add` at the top right and then `Done`.
 5. You should now have a flow that looks like this:
-// insert screenshot
+
+![Backend FLow](workshop1-flow_backend.png "Backend Flow")
 
 Nice! Your app should now be ready to *put a beard on it*! Hit the big Deploy button at the top right and access your app at `your-node-red-url/beard-me`, show us your best faces. ;)  
