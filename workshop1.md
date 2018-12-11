@@ -163,7 +163,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
        <!-- Our camera web component --> 
         <node-red-camera data-nr-name="beard-picture" data-nr-type="still"></node-red-camera>
       </div>
-      <div id="pic-before" style="height:480px; width:640px;">
+      <div id="pic-before">
         Before
       </div>
     </div>
