@@ -194,7 +194,7 @@ On the backend side, there's only a few things we need to do:
 Before we start, you'll need to add the camera node to your Node-RED instance as it's not installed by default. To do so, click on the Hamburger menu at the top right, select `Manage palette`, go to the `Install` tab and look for `node-red-contrib-web-components`. Click install and give it a few moments. All set! 
 
 1. In the nodes panel on the left-hand side of the Node-RED UI, search for the `Component Camera` node with one output and drag it onto the canvas. Double click on it and set the `Connection ID` to `beard-picture`. This is the same ID we've set in the HTML, that's how we're going to get the picture data.
-2. Back in the node panel, search for the `visual recognition` node and drag it onto the canvas, it should automatically pick up your Watson credentials so no configuration is needed.
+2. Back in the node panel, search for the `visual recognition` node and drag it onto the canvas, open it and set the `Detect` field to `Detect Faces`. It should automatically pick up your Watson credentials, if it asks for them make sure that your service is correctly connected to Node-RED.
 3. Now, drag and drop the `change` node to the palette, open it and configure it to set the `msg.payload` to `msg.result`. This will set the results from the Visual Recognition node to the payload property.
 4. Last, look for the websocket **output** node and drag it to the canvas. This one requires a bit of configuration:
     * Click on it and set `Type` to `Listen on`
@@ -207,12 +207,14 @@ Before we start, you'll need to add the camera node to your Node-RED instance as
 
 Nice! Your app should now be ready to *put a beard on it*! Hit the big Deploy button at the top right and access your app at `your-node-red-url/beard-me`, show us your best faces. ;)  
 
-
-
-### Solutions
+### Solutions (if you were stuck at some point)
 
 [Frontend flow](flows/flow_frontend.json)
 
 [Backend flow](flows/flow_backend.json)
 
 [Complete flow](flows/flow_all.json)
+
+### Next workshop
+
+[**Workshop 2 - Serverless, Node-Red & Watson Visual Recognition**](workshop%202/README.md)
