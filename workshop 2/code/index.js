@@ -5,3 +5,5 @@ function main(params) {
     // Snippet 1
 
 }
+
+exports.main = main;
