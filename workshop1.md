@@ -23,11 +23,11 @@ At it's core, Node-RED is an interface that's running on an HTTP enabled server,
 
 Good start! If you access your Node-Red URL followed by `/beard-me` you'll now see a blank page, not very jolly! Let's add some code to that. 
 
-6. Open the `Javascript` node and paste the following code. Make sure that you read through the code to make sure you understand what's happening! If you're not sure feel free to ask one of the mentors that can help you.
+6. Open the `Javascript` node and paste the following code. Make sure that you read through the code to make sure you understand what's happening! If you're not sure feel free to ask one of the mentors that can help you
 <details>
 <summary>Click to see the Javascript</summary>
 <p>
-
+   
 ```javascript
 (function () {
 
