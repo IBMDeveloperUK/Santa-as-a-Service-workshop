@@ -81,6 +81,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 </details>  
 
 <br/>
+
 7. Now, we'll do the same with a bit of CSS, open the `Stylesheet` node and paste the following code
 <details>
 <summary>Click to see the CSS</summary>
@@ -119,6 +120,7 @@ Good start! If you access your Node-Red URL followed by `/beard-me` you'll now s
 </details>  
 
 <br/>
+
 8. Almost there! Now we need to import both the Javascript and the CSS on our HTML page, to do so, open the HTML node and paste in the following code
 <details>
 <summary>Click to see the HTML</summary>
