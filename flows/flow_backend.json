@@ -1,0 +1,77 @@
+[
+  {
+      "id": "2882375d.38ab88",
+      "type": "component-camera",
+      "z": "a6f218c5.c0c9d8",
+      "name": "",
+      "unique": "beard-picture",
+      "x": 270,
+      "y": 260,
+      "wires": [
+          [
+              "65e2b316.75976c"
+          ]
+      ]
+  },
+  {
+      "id": "65e2b316.75976c",
+      "type": "visual-recognition-v3",
+      "z": "a6f218c5.c0c9d8",
+      "name": "",
+      "vr-service-endpoint": "https://gateway.watsonplatform.net/visual-recognition/api",
+      "image-feature": "detectFaces",
+      "lang": "en",
+      "x": 490,
+      "y": 260,
+      "wires": [
+          [
+              "449c7cf2.76bf94"
+          ]
+      ]
+  },
+  {
+      "id": "449c7cf2.76bf94",
+      "type": "change",
+      "z": "a6f218c5.c0c9d8",
+      "name": "",
+      "rules": [
+          {
+              "t": "set",
+              "p": "payload",
+              "pt": "msg",
+              "to": "result",
+              "tot": "msg"
+          }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 700,
+      "y": 260,
+      "wires": [
+          [
+              "65566457.f78bac"
+          ]
+      ]
+  },
+  {
+      "id": "65566457.f78bac",
+      "type": "websocket out",
+      "z": "a6f218c5.c0c9d8",
+      "name": "",
+      "server": "4ea45e62.9be87",
+      "client": "",
+      "x": 920,
+      "y": 260,
+      "wires": []
+  },
+  {
+      "id": "4ea45e62.9be87",
+      "type": "websocket-listener",
+      "z": "",
+      "path": "/beard-me",
+      "wholemsg": "false"
+  }
+]

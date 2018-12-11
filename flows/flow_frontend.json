@@ -1,0 +1,87 @@
+[
+    {
+        "id": "7c6def7f.56e75",
+        "type": "http in",
+        "z": "a6f218c5.c0c9d8",
+        "name": "Give me a beard! ",
+        "url": "/beard-me",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "b1979b03.0b4688"
+            ]
+        ]
+    },
+    {
+        "id": "800eaa4a.516358",
+        "type": "template",
+        "z": "a6f218c5.c0c9d8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Santa-as-a-Service</title>\n  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css\">\n  <style type=\"text/css\">{{{payload.style}}}</style>\n  \n  <script defer src=\"https://use.fontawesome.com/releases/v5.3.1/js/all.js\"></script>\n    <script src=\"https://unpkg.com/@webcomponents/custom-elements\"></script>\n    <script src=\"https://unpkg.com/@webcomponents/shadydom\"></script>\n  <script src=\"/web-components/camera\"></script>\n</head>\n\n<body>\n  <section class=\"section\">\n    <div class=\"container\">\n      <h1 class=\"title\">\n        Santa-as-a-Service\n      </h1>\n      <p class=\"subtitle\">\n        Take a picture of yourself and wait for the magic to happen!\n      </p>\n    </div>\n  </section>\n  <section class=\"section\">\n    <div class=\"columns\">\n      <div id=\"upload\" style=\"width:50%\">\n        <node-red-camera data-nr-name=\"beard-picture\" data-nr-type=\"still\"></node-red-camera>\n      </div>\n      <div id=\"pic-before\" class=\"column\">\n        Before\n      </div>\n    </div>\n  </section>\n\n\n  <script>\n    {{{payload.script}}}\n  </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 760,
+        "y": 200,
+        "wires": [
+            [
+                "5e407149.5ba0a"
+            ]
+        ]
+    },
+    {
+        "id": "5e407149.5ba0a",
+        "type": "http response",
+        "z": "a6f218c5.c0c9d8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 890,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b1979b03.0b4688",
+        "type": "template",
+        "z": "a6f218c5.c0c9d8",
+        "name": "JavaScript",
+        "field": "payload.script",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "(function () {\n\n    'use strict';\n    // select the camera element in the DOM\n    const camera = document.querySelector('node-red-camera');\n\n    // listen to an event when a picture is taken\n    camera.addEventListener('imageavailable', function (data) {\n        let img = '<img src=\"' + data.detail + '\" alt=\"Image before the beard\"/>'\n        document.body.querySelector('#pic-before').innerHTML = img;\n    });\n\n    // create a new WebSocket connection\n    const WS = new WebSocket('wss://' + window.location.host + '/beard-me');\n    WS.onopen = function (e) {\n        console.log('WS OPEN:', e);\n    };\n\n    // receive a message through the WebSocket\n    WS.onmessage = function (e) {\n\n        if (e.data) {\n            const face_info = JSON.parse(e.data);\n            face_info.images[0].faces.forEach(function (element) {\n                var top = element.face_location.top;\n                var left = element.face_location.left;\n                var width = element.face_location.width;\n                var height = element.face_location.height;\n                var beard_elem = '<div class=\"beard\" style=\"top: '+ (0.50 * height + (top+10)) +'px; left: '+ (left+10) +'px; width: '+ (width - 20) +'px; height: '+ height +'px;\"></div>';\n                document.body.querySelector('#pic-before').innerHTML += beard_elem;\n            });\n        }\n    };\n\n    WS.onclose = function (e) {\n        console.log('WS CLOSE:', e);\n    };\n\n    WS.onerror = function (e) {\n        console.log('WS ERROR:', e);\n    };\n\n}());",
+        "output": "str",
+        "x": 450,
+        "y": 200,
+        "wires": [
+            [
+                "a2090aba.933088"
+            ]
+        ]
+    },
+    {
+        "id": "a2090aba.933088",
+        "type": "template",
+        "z": "a6f218c5.c0c9d8",
+        "name": "Stylesheet",
+        "field": "payload.style",
+        "fieldType": "msg",
+        "format": "css",
+        "syntax": "mustache",
+        "template": "#pic-before {\n    width: 640px !important;\n    height: 480px !important;\n    position: relative;\n    overflow: hidden;\n    flex: 0 0 640px;\n}\n.beard {\n  position: absolute;\n  display: block;\n  /*background-image: url(https://svgshare.com/i/9j4.svg);*/\n  background-image: url(https://vignette.wikia.nocookie.net/clubpenguin/images/3/34/FuzzyWhiteBeard.png);\n  background-size: 100% 100%;\n  background-repeat: no-repeat;\n}\n.beard img {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}",
+        "output": "str",
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "800eaa4a.516358"
+            ]
+        ]
+    }
+]
