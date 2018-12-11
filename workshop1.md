@@ -206,3 +206,13 @@ Before we start, you'll need to add the camera node to your Node-RED instance as
 ![Backend FLow](workshop1-flow_backend.png.png "Backend Flow")
 
 Nice! Your app should now be ready to *put a beard on it*! Hit the big Deploy button at the top right and access your app at `your-node-red-url/beard-me`, show us your best faces. ;)  
+
+
+
+### Solutions
+
+[Frontend flow](flows/flow_frontend.json)
+
+[Backend flow](flows/flow_backend.json)
+
+[Complete flow](flows/flow_all.json)
